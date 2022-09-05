@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Currency conversion</title>
+</head>
+<body>
+<h2>Convert various currencies</h2>
+<form name='conversion_form' th:object="${convertData}" method='GET'>
+    <table>
+        <tr>
+            <td>Select From which Currency :</td>
+            <td>
+                <select th:field="*{from_this_currency}">
+                    <option value=""> -- </option>
+                    <option th:each="entry : ${currencies.entrySet()}"
+                            th:value="${entry.key}"
+                            th:utext="${entry.value}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Select To which Currency :</td>
+            <td>
+                <select th:field="*{to_this_currency}">
+                    <option value=""> -- </option>
+                    <option th:each="entry : ${currencies.entrySet()}"
+                            th:value="${entry.key}"
+                            th:utext="${entry.value}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="amount_to_be_converted">Amount to be converted :</label>
+            </td>
+            <td>
+                <input type="number" id="amount_to_be_converted" name="amount_to_be_converted">
+            </td>
+            <td>
+                <span th:if="${#fields.hasErrors('amount_to_be_converted')}" th:errors="*{amount_to_be_converted}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td><input name="convert" type="submit" value="convert" /></td>
+        </tr>
+    </table>
+</form>
+
+<div >
+    <p>
+
+        <span th:text="${convertData.amount_to_be_converted}"></span> <span th:text="${convertData.from_this_currency}"></span>
+        &ensp;equals&ensp;
+        <span th:text="${result}"></span> <span th:text="${convertData.to_this_currency}"></span>
+    </p>
+
+</div>
+</body>
+</html>
